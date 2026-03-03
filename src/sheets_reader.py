@@ -27,8 +27,11 @@ def fetch_pending_rows():
     records = sheet.get_all_records()
     
     filtered = []
-    for index, row in enumerate(records, start=2):  
+    for index, row in enumerate(records, start=2):
         if row["Status"] in ("", "Pending"):
+
+            row["Mobile"] = str(row["Mobile"])
+
             row["_row_number"] = index
             filtered.append(row)
 
