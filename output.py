@@ -2,8 +2,11 @@ from src.sheets_reader import fetch_pending_rows, update_status
 from src.validator import validate_row
 from src.compliance import classify_message
 from src.scheduler_engine import schedule_message
+import time
 
 rows = fetch_pending_rows()
+
+print(f"Rows found for processing: {len(rows)}")
 
 for row in rows:
     print(f"\nProcessing row: {row['_row_number']}")
@@ -30,5 +33,9 @@ for row in rows:
     print("Message Approved")
 
     schedule_message(row, parsed_dt)
-
     update_status(row["_row_number"], "Status", "Scheduled")
+
+print("\nScheduler running... waiting for scheduled jobs")
+
+while True:
+    time.sleep(10)
